@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <sys/time.h> // gettimeofdaty 사용
+#include<unistd.h>
+
+
+struct timeval do_single_thread(){
+	struct timeval time1,time2,time3;
+	gettimeofday(&time1,NULL);
+	int i=0,j=0;
+
+	while(1)
+	{
+		i++;
+		if(i==1000)
+		{	j++;
+			i=0;
+		}
+		if(j==1000)
+			break;
+	}
+	gettimeofday(&time2,NULL);
+	time3.tv_sec=time1.tv_sec-time2.tv_sec;
+	time3.tv_usec=time1.tv_usec-time2.tv_usec;
+	printf("single_thread:\n");
+	printf("결과: %d, 소요시간: %ld초",j,time3.tv_sec+time3.tv_usec/1000000);
+	return time3;
+
+
+}
+struct timeval do_multi_thread(){
+
+
+}
+
+void print_diff(struct timeval single,struct timeval multi){
+
+}
+
+
+
+int main(int argc, char* argv[])
+{
+//	struct timeval input_time;
+//	gettimeofday(&input_time,NULL);
+	struct timeval single_thread_processing_time = do_single_thread();
+	struct timeval multi_thread_processing_time = do_multi_thread();
+
+	print_diff(single_thread_processing_time,multi_thread_processing_time);
+
+	return 0;
+}
